@@ -15,3 +15,41 @@ $border-color: #d63031;
 body {
     background-color: $background;
 }
+
+.App {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15em;
+
+    .calculator-container {
+        position: relative;
+        width: 380px;
+        height: auto;
+        border: 1px solid $border-color;
+
+        .display {
+            background-color: black;
+            color: white;
+            @include equal-padding(20px)
+        }
+
+        .buttons-container {
+            background-color: $container;
+            
+            .row {
+                grid-gap: 0;
+            }
+
+            button {
+                height: 70px;
+
+                .jumbo-btn {
+                    min-width: 180px;
+                }
+            }
+
+            
+        }
+    }
+}
