@@ -2,10 +2,17 @@ import React, { Component } from 'react'
 import '../stylesheets/styles.scss';
 
 export default class Calculator extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            displayText: "Placeholder text"
+        }
+    }
+
     render() {
         return (
             <div className="calculator-container">
-                <div className="display text-center">Display Placeholder Text</div>
+                <div className="display text-center">{this.state.displayText}</div>
                 <div className="buttons-container">
                     <div className="row g-0">
                         <div className="col-6 d-flex">
