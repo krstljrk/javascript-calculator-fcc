@@ -6,7 +6,7 @@ export default class Calculator extends Component {
         super(props);
         this.state = {
             firstVal: '0',
-            expression: '',
+            expression: '+',
             secondVal: '',
             entireExpression: '1 + 2 = 3',
             result: '3',
