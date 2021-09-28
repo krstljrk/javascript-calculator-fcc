@@ -31,7 +31,8 @@ body {
         .display {
             background-color: black;
             color: white;
-            @include equal-padding(20px)
+            height: 50px;
+            padding-top: 10px;
         }
 
         .buttons-container {
