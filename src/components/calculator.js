@@ -5,22 +5,64 @@ export default class Calculator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            display: 'Something'
+            firstVal: '0',
+            expression: '',
+            secondVal: '',
+            entireExpression: '1 + 2 = 3',
+            result: '3',
+            evaluated: false
         }
 
         this.initialize = this.initialize.bind(this);
+        this.evaluate = this.evaluate.bind(this);
     }
 
     initialize = () => {
         this.setState({
-            display: ' '
+            firstVal: '0',
+            expression: '',
+            secondVal: '',
+            entireExpression: '',
+            result: '',
+            evaluated: false
+        })
+    }
+
+    evaluate = () => {
+        this.setState({
+            expression : ' ',
+            evaluated: true
         })
     }
 
     render() {
         return (
             <div className="calculator-container">
-                <div className="display text-center">{this.state.display}</div>
+                <div className="display">
+                    <div className="row">
+                        
+                        <div className="col-11">
+                            {this.state.evaluated ? this.state.entireExpression : 
+                                this.state.secondVal == '' ? '' : this.state.firstVal}
+                            {/* {this.state.firstVal} */}
+                        </div>
+                        <div className="col-1">
+                            {this.state.evaluated ? ' ' : ' '}
+                        </div>
+                    </div>
+                    <div className="row last-row">
+                        <div className="col-11">
+                            {this.state.evaluated ? this.state.result : 
+                                this.state.secondVal == '' ? this.state.firstVal : this.state.secondVal}
+                            {/* {this.state.secondVal} */}
+                        </div>
+                        <div className="col-1">
+                            {/* {this.state.evaluated ? "=" : this.state.expression} */}
+                            {this.state.expression}
+                        </div>
+                        
+                    </div>
+                </div>
                 <div className="buttons-container">
                     <div className="row g-0">
                         <div className="col-6 d-flex">
@@ -80,7 +122,7 @@ export default class Calculator extends Component {
                             <button className="btn btn-outline-dark flex-fill">0</button>
                         </div>
                         <div className="col-6 d-flex">
-                            <button className="btn btn-outline-dark flex-fill">=</button>
+                            <button className="btn btn-outline-dark flex-fill" onClick={this.evaluate}>=</button>
                         </div>
                     </div>
                 </div>
