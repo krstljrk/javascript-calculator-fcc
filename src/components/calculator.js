@@ -15,7 +15,8 @@ export default class Calculator extends Component {
 
         this.initialize = this.initialize.bind(this);
         this.evaluate = this.evaluate.bind(this);
-        this.handlePlus = this.handlePlus.bind(this);
+        /* this.handlePlus = this.handlePlus.bind(this); */
+        this.createEntireExpression = this.createEntireExpression.bind(this);
     }
 
     initialize = () => {
@@ -36,11 +37,18 @@ export default class Calculator extends Component {
         })
     }
 
-    handlePlus = () => {
+    createEntireExpression = () => {
+        const fullExp = `${this.state.firstVal} ${this.state.expression} ${this.state.secondVal} = ${this.state.result}`;
+        this.setState({
+            entireExpression: fullExp
+        })
+    }
+
+    /* handlePlus = () => {
         this.setState({
             expression: '+'
         })
-    }
+    } */
 
     render() {
         return (
@@ -107,7 +115,7 @@ export default class Calculator extends Component {
                             <button className="btn btn-outline-dark flex-fill">6</button>
                         </div>
                         <div className="col-3 d-flex">
-                            <button className="btn btn-outline-dark flex-fill" onClick={this.handlePlus('+')}>+</button>
+                            <button className="btn btn-outline-dark flex-fill" /* onClick={this.handlePlus('+')} */>+</button>
                         </div>
                     </div>
                     <div className="row g-0">
