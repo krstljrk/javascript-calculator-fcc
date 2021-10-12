@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import '../stylesheets/styles.scss';
 
-export default class Calculator extends Component {
+export default class Calculator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -18,6 +18,7 @@ export default class Calculator extends Component {
         this.handleOperator = this.handleOperator.bind(this);
         this.createEntireExpression = this.createEntireExpression.bind(this);
         this.handleNum = this.handleNum.bind(this);
+        this.handleDecimals = this.handleDecimals.bind(this);
     }
 
     initialize = () => {
@@ -92,6 +93,26 @@ export default class Calculator extends Component {
         } else if (this.state.evaluated) {
             this.initialize();
         }
+    }
+
+    handleDecimals = () => {
+        if (!this.state.expression && !this.state.evaluated) {
+            this.setState({
+                firstVal: this.state.firstVal + '.'
+            })
+        } else if (this.state.expression && !this.state.evaluated) {
+            if (!this.state.secondVal) {
+                this.setState({
+                    secondVal: '0.'
+                })
+            } else {
+                this.setState({
+                    secondVal: this.state.secondVal + '.'
+                })
+            }
+
+        }
+
     }
 
     render() {
@@ -173,7 +194,7 @@ export default class Calculator extends Component {
                             <button className="btn btn-outline-dark flex-fill" onClick={() => { this.handleNum('3') }}>3</button>
                         </div>
                         <div className="col-3 d-flex">
-                            <button className="btn btn-outline-dark flex-fill">.</button>
+                            <button className="btn btn-outline-dark flex-fill" onClick={() => { this.handleDecimals() }}>.</button>
                         </div>
                     </div>
                     <div className="row g-0">
