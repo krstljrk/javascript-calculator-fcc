@@ -5,11 +5,11 @@ export default class Calculator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstVal: '',
+            firstVal: '0',
             expression: '',
             secondVal: '',
-            entireExpression: '1 + 2 = 3',
-            result: '3',
+            entireExpression: '',
+            result: '',
             evaluated: false
         }
 
@@ -33,15 +33,27 @@ export default class Calculator extends Component {
     }
 
     evaluate = () => {
-        this.setState({
-            expressionField: '',
-            entireExpression: this.createEntireExpression(),
-            evaluated: true
-        })
+        if (this.state.secondVal == '') {
+            this.setState({
+                secondVal: '0'
+            })
+        }
+        if (this.state.secondVal) {
+            const full = this.createEntireExpression();
+
+            this.setState({
+                expressionField: '',
+                entireExpression: full,
+                result: eval(full), // WHERE THE RESULT MAGIC HAPPENS
+                evaluated: true
+            })
+        }
+
     }
 
     createEntireExpression = () => {
         const fullExp = `${this.state.firstVal} ${this.state.expression} ${this.state.secondVal}`; // = ${this.state.result}
+        //console.log(eval(fullExp))
         return fullExp;
     }
 
@@ -51,6 +63,8 @@ export default class Calculator extends Component {
                 expressionField: o,
                 expression: o
             })
+        } else if (this.state.evaluated) {
+            this.initialize();
         }
 
     }
@@ -71,6 +85,8 @@ export default class Calculator extends Component {
             this.setState({
                 secondVal: this.state.secondVal + n
             });
+        } else if (this.state.evaluated) {
+            this.initialize();
         }
     }
 
