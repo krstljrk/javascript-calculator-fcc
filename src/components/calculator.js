@@ -5,9 +5,9 @@ export default class Calculator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstVal: '0',
-            expression: '+',
-            secondVal: '3',
+            firstVal: '',
+            expression: '',
+            secondVal: '',
             entireExpression: '1 + 2 = 3',
             result: '3',
             evaluated: false
@@ -32,7 +32,7 @@ export default class Calculator extends Component {
 
     evaluate = () => {
         this.setState({
-            expression : '',
+            expression: '',
             entireExpression: this.createEntireExpression(),
             evaluated: true
         })
@@ -44,19 +44,22 @@ export default class Calculator extends Component {
     }
 
     handleOperator = (o) => {
-        this.setState({
-            expression: o
-        })
-    } 
+        if (this.state.expression == '' && !this.state.evaluated) {
+            this.setState({
+                expression: o
+            })
+        }
+
+    }
 
     render() {
         return (
             <div className="calculator-container">
                 <div className="display">
                     <div className="row">
-                        
+
                         <div className="col-11">
-                            {this.state.evaluated ? this.state.entireExpression : 
+                            {this.state.evaluated ? this.state.entireExpression :
                                 this.state.secondVal == '' ? '' : this.state.firstVal}
                             {/* {this.state.firstVal} */}
                         </div>
@@ -66,7 +69,7 @@ export default class Calculator extends Component {
                     </div>
                     <div className="row last-row">
                         <div className="col-11">
-                            {this.state.evaluated ? this.state.result : 
+                            {this.state.evaluated ? this.state.result :
                                 this.state.secondVal == '' ? this.state.firstVal : this.state.secondVal}
                             {/* {this.state.secondVal} */}
                         </div>
@@ -74,7 +77,7 @@ export default class Calculator extends Component {
                             {/* {this.state.evaluated ? "=" : this.state.expression} */}
                             {this.state.expression}
                         </div>
-                        
+
                     </div>
                 </div>
                 <div className="buttons-container">
@@ -83,10 +86,10 @@ export default class Calculator extends Component {
                             <button className="btn btn-outline-dark flex-fill" onClick={this.initialize}>Clear</button>
                         </div>
                         <div className="col-3 d-flex">
-                            <button className="btn btn-outline-dark flex-fill" onClick={() => {this.handleOperator('/')}} >/</button>
+                            <button className="btn btn-outline-dark flex-fill" onClick={() => { this.handleOperator('/') }} >/</button>
                         </div>
                         <div className="col-3 d-flex">
-                            <button className="btn btn-outline-dark flex-fill" onClick={() => {this.handleOperator('*')}} >x</button>
+                            <button className="btn btn-outline-dark flex-fill" onClick={() => { this.handleOperator('*') }} >x</button>
                         </div>
                     </div>
                     <div className="row g-0">
@@ -100,7 +103,7 @@ export default class Calculator extends Component {
                             <button className="btn btn-outline-dark flex-fill">9</button>
                         </div>
                         <div className="col-3 d-flex">
-                            <button className="btn btn-outline-dark flex-fill" onClick={() => {this.handleOperator('-')}}>-</button>
+                            <button className="btn btn-outline-dark flex-fill" onClick={() => { this.handleOperator('-') }}>-</button>
                         </div>
                     </div>
                     <div className="row g-0">
@@ -114,7 +117,7 @@ export default class Calculator extends Component {
                             <button className="btn btn-outline-dark flex-fill">6</button>
                         </div>
                         <div className="col-3 d-flex">
-                            <button className="btn btn-outline-dark flex-fill" onClick={() => {this.handleOperator('+')}}>+</button>
+                            <button className="btn btn-outline-dark flex-fill" onClick={() => { this.handleOperator('+') }}>+</button>
                         </div>
                     </div>
                     <div className="row g-0">
