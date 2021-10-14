@@ -4,45 +4,154 @@ import '../stylesheets/styles.scss';
 export default class Calculator extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            expression: '0'
-        }
+        /* this.state = {
+            firstVal: '0',
+            expression: '',
+            expressionField: '',
+            secondVal: '',
+            entireExpression: '',
+            result: '',
+            evaluated: false,
+            chaining: false
+        } */
 
         this.initialize = this.initialize.bind(this);
-        this.handleOperator = this.handleOperator.bind(this);
-        this.handleNum = this.handleNum.bind(this);
+        //this.evaluate = this.evaluate.bind(this);
+        //this.handleOperator = this.handleOperator.bind(this);
+        //this.createEntireExpression = this.createEntireExpression.bind(this);
+        //this.handleNum = this.handleNum.bind(this);
+        //this.handleDecimals = this.handleDecimals.bind(this);
     }
 
     initialize = () => {
         this.setState({
-            expression: '0'
+            firstVal: '0',
+            expressionField: '',
+            expression: '',
+            secondVal: '',
+            entireExpression: '',
+            result: '',
+            evaluated: false,
+            chaining: false
         })
     }
 
-    handleNum = (n) => {
-        if (this.state.expression == 0) {
+    /* evaluate = () => {
+        console.log("In evaluated");
+        if (this.state.firstVal && this.state.expression && this.state.secondVal) {
+            const full = this.createEntireExpression(this.state.firstVal, this.state.expression, this.state.secondVal);
+
             this.setState({
-                expression: n
+                expressionField: '',
+                entireExpression: full,
+                result: eval(full), // WHERE THE RESULT MAGIC HAPPENS
+                evaluated: true
             })
-        } else {
+        } else if (this.state.firstVal && this.state.expression && !this.state.secondVal) {
+            const full = this.createEntireExpression(this.state.firstVal, this.state.expression, '0');
+
             this.setState({
-                expression: this.state.expression + n
+                expressionField: '',
+                entireExpression: full,
+                result: eval(full), // WHERE THE RESULT MAGIC HAPPENS
+                evaluated: true
             })
         }
 
+    } */
+
+    /* createEntireExpression = (first, operator, second) => {
+        const fullExp = `${first} ${operator} ${second}`; // = ${this.state.result}
+        //console.log(eval(fullExp))
+        return fullExp;
+    } */
+
+    /* handleOperator = (o) => {
+        if (o == '-' && this.state.firstVal == 0) {
+            this.setState({
+                firstVal: '-'
+            })
+        } else if( o == '-' && this.state.firstVal && this.state.expression && !this.state.secondVal) {
+            this.setState({
+                secondVal: '-'
+            })
+        }
+
+        if (!this.state.evaluated) {
+            this.setState({
+                expressionField: o,
+                expression: o
+            })
+        } else if (this.state.firstVal && this.state.expression || this.state.firstVal && this.state.expression && this.state.secondVal) {
+            this.evaluate();
+            const prevResult = this.state.result;
+            this.setState({
+                firstVal: prevResult,
+                secondVal: '',
+                expressionField: o,
+                expression: o,
+                chaining: true,
+                evaluated: false
+            })
+        } /* else if (this.state.evaluated) {
+            const prevResult = this.state.result;
+            this.initialize();
+            this.setState({
+                firstVal: prevResult,
+                secondVal: '',
+                expressionField: o,
+                expression: o
+            })
+        } // end here too
+
+    } */
+
+    /* handleNum = (n) => {
+        if (!this.state.expression && !this.state.evaluated) {
+            if (this.state.firstVal == '0') {
+                this.setState({
+                    firstVal: n
+                });
+            } else {
+                this.setState({
+                    firstVal: this.state.firstVal + n
+                });
+            }
+
+        } else if (this.state.expression && !this.state.evaluated) {
+            this.setState({
+                secondVal: this.state.secondVal + n
+            });
+        } else if (this.state.expression && this.state.evaluated) {
+            this.setState({
+                secondVal: this.state.secondVal + n,
+                chaining: true,
+                evaluated: false
+            });
+        } else if (this.state.evaluated) {
+            this.initialize();
+        }
     }
+ */
+    /* handleDecimals = () => {
+        if (!this.state.expression && !this.state.evaluated && !this.state.firstVal.includes('.')) {
+            this.setState({
+                firstVal: this.state.firstVal + '.'
+            })
+        } else if (this.state.expression && !this.state.evaluated && !this.state.secondVal.includes('.')) {
+            if (!this.state.secondVal) {
+                this.setState({
+                    secondVal: '0.'
+                })
+            } else {
+                this.setState({
+                    secondVal: this.state.secondVal + '.'
+                })
+            }
 
-    handleOperator = (o) => {
-        const operators = ['+', '-', '*', '/'];
-        this.setState({
-            expression: this.state.expression + o
-        })
-    }
+        }
 
-    negate = () => {
-
-    }
-
+    } */
 
     render() {
         return (
@@ -51,26 +160,24 @@ export default class Calculator extends React.Component {
                     <div className="row">
 
                         <div className="col-11">
-                            {/* this.state.evaluated && !this.state.chaining ? this.state.entireExpression :
+                            {this.state.evaluated && !this.state.chaining ? this.state.entireExpression :
                                 !this.state.chaining && this.state.secondVal == '' ? '' : 
-                                this.state.chaining ? this.state.result : this.state.firstVal */}
+                                this.state.chaining ? this.state.result : this.state.firstVal}
                             {/* {this.state.firstVal} */}
-                            {/* this.state.expression ? '' : this.state.expression */}
                         </div>
                         <div className="col-1">
-                            {/* this.state.evaluated ? ' ' : ' ' */}
+                            {this.state.evaluated ? ' ' : ' '}
                         </div>
                     </div>
                     <div className="row last-row">
                         <div className="col-11">
-                            {/* this.state.evaluated && !this.state.chaining ? this.state.result :
-                                this.state.secondVal == '' ? this.state.firstVal : this.state.secondVal */}
+                            {this.state.evaluated && !this.state.chaining ? this.state.result :
+                                this.state.secondVal == '' ? this.state.firstVal : this.state.secondVal}
                             {/* {this.state.secondVal} */}
-                            {this.state.expression}
                         </div>
                         <div className="col-1">
                             {/* {this.state.evaluated ? "=" : this.state.expression} */}
-                            {/* this.state.expressionField */}
+                            {this.state.expressionField}
                         </div>
 
                     </div>
