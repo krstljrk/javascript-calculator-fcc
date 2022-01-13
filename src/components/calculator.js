@@ -25,7 +25,7 @@ export default class Calculator extends React.Component {
     }
 
     handleNum = (n) => {
-        if (this.state.expression == 0) {
+        if (this.state.expression === '0') {
             this.setState({
                 expression: n
             })
@@ -45,35 +45,39 @@ export default class Calculator extends React.Component {
     }
 
     handleOperator = (o) => {
-        //const operators = ['+', '-', '*', '/'];
+        const operators = ['+', '*', '/'];
+        let expressionArr = [...this.state.expression.trim()];
+        let arrLastElement = expressionArr.pop()
+
         if (this.state.evaluated) {
             this.setState({
                 evaluated: false,
-                expression: this.state.result + " " + o
+                expression: this.state.result + " " + o + " "
             });
         } else {
-            if (!this.state.expression.endsWith(o)) {
+            if (!operators.includes(arrLastElement) || o === '-') {
                 this.setState({
-                    expression: this.state.expression + " " + o
+                    expression: this.state.expression + " " + o + " "
                 });
             }
         }
-
-        
     }
 
     // Function to handle decimal values
     handleDecimals = () => {
-        
-    }
-
-    // Function to handle negating values (-1, -6, etc)
-    negate = () => {
-
+        let expressionArr = [...this.state.expression];
+        let arrLastElement = expressionArr.pop()
+        if (arrLastElement != '.') {
+            this.setState({
+                expression: this.state.expression + "."
+            });
+        }
     }
 
     // Function to handle evaluation
     evaluate = () => {
+        this.state.expression = this.state.expression.replace(/‑/g, '-')
+        .replace('--', '+0+0+0+0+0+0+');
         let evaluationResult = eval(this.state.expression);
         this.setState({
             result: evaluationResult,
@@ -90,6 +94,7 @@ export default class Calculator extends React.Component {
                     <div className="row">
 
                         <div className="col-11">
+                            {/* smaller top row */}
                             {this.state.result && this.state.evaluated ? this.state.expression : ''}
                         </div>
                         <div className="col-1">
@@ -97,6 +102,7 @@ export default class Calculator extends React.Component {
                     </div>
                     <div className="row last-row">
                         <div className="col-11">
+                            {/* larger bottom row */}
                             {this.state.result && this.state.evaluated ? this.state.result : this.state.expression}
                         </div>
                         <div className="col-1">
