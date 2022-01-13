@@ -5,7 +5,9 @@ export default class Calculator extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            expression: '0'
+            expression: '0',
+            result: '',
+            evaluated: false
         }
 
         this.initialize = this.initialize.bind(this);
@@ -13,9 +15,12 @@ export default class Calculator extends React.Component {
         this.handleNum = this.handleNum.bind(this);
     }
 
+    // Reset inputs
     initialize = () => {
         this.setState({
-            expression: '0'
+            expression: '0',
+            result: '',
+            evaluated: false
         })
     }
 
@@ -25,22 +30,56 @@ export default class Calculator extends React.Component {
                 expression: n
             })
         } else {
-            this.setState({
-                expression: this.state.expression + n
-            })
+            if (this.state.expression.endsWith('+') || this.state.expression.endsWith('-') || this.state.expression.endsWith('*') || this.state.expression.endsWith('/')) {
+                this.setState({
+                    expression: this.state.expression + " " + n
+                })
+            } else {
+                this.setState({
+                    expression: this.state.expression + n
+                })
+            }
+            
         }
 
     }
 
     handleOperator = (o) => {
-        const operators = ['+', '-', '*', '/'];
-        this.setState({
-            expression: this.state.expression + o
-        })
+        //const operators = ['+', '-', '*', '/'];
+        if (this.state.evaluated) {
+            this.setState({
+                evaluated: false,
+                expression: this.state.result + " " + o
+            });
+        } else {
+            if (!this.state.expression.endsWith(o)) {
+                this.setState({
+                    expression: this.state.expression + " " + o
+                });
+            }
+        }
+
+        
     }
 
+    // Function to handle decimal values
+    handleDecimals = () => {
+        
+    }
+
+    // Function to handle negating values (-1, -6, etc)
     negate = () => {
 
+    }
+
+    // Function to handle evaluation
+    evaluate = () => {
+        let evaluationResult = eval(this.state.expression);
+        this.setState({
+            result: evaluationResult,
+            evaluated: true
+        })
+        
     }
 
 
@@ -51,26 +90,16 @@ export default class Calculator extends React.Component {
                     <div className="row">
 
                         <div className="col-11">
-                            {/* this.state.evaluated && !this.state.chaining ? this.state.entireExpression :
-                                !this.state.chaining && this.state.secondVal == '' ? '' : 
-                                this.state.chaining ? this.state.result : this.state.firstVal */}
-                            {/* {this.state.firstVal} */}
-                            {/* this.state.expression ? '' : this.state.expression */}
+                            {this.state.result && this.state.evaluated ? this.state.expression : ''}
                         </div>
                         <div className="col-1">
-                            {/* this.state.evaluated ? ' ' : ' ' */}
                         </div>
                     </div>
                     <div className="row last-row">
                         <div className="col-11">
-                            {/* this.state.evaluated && !this.state.chaining ? this.state.result :
-                                this.state.secondVal == '' ? this.state.firstVal : this.state.secondVal */}
-                            {/* {this.state.secondVal} */}
-                            {this.state.expression}
+                            {this.state.result && this.state.evaluated ? this.state.result : this.state.expression}
                         </div>
                         <div className="col-1">
-                            {/* {this.state.evaluated ? "=" : this.state.expression} */}
-                            {/* this.state.expressionField */}
                         </div>
 
                     </div>
